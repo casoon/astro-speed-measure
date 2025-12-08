@@ -1,0 +1,41 @@
+{
+  "name": "astro-speed-measure",
+  "version": "0.1.0",
+  "description": "Build performance metrics for Astro",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["astro", "astro-integration", "performance", "build", "metrics"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/casoon/astro-speed-measure.git"
+  },
+  "bugs": {
+    "url": "https://github.com/casoon/astro-speed-measure/issues"
+  },
+  "homepage": "https://github.com/casoon/astro-speed-measure#readme",
+  "peerDependencies": {
+    "astro": "^4.0.0 || ^5.0.0"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "astro": "^5.1.1",
+    "typescript": "^5.7.2"
+  }
+}
