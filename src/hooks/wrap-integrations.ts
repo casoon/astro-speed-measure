@@ -1,11 +1,12 @@
-import type { AstroIntegration } from 'astro';
-import type { TimingData, TimingEntry } from '../types.js';
+import type { AstroIntegration } from "astro";
+import type { TimingStore } from "../utils/timing.js";
+import { performance } from "node:perf_hooks";
 
 export function wrapIntegration(
   integration: AstroIntegration,
-  timings: TimingData
+  store: TimingStore,
 ): AstroIntegration {
-  const wrappedHooks: AstroIntegration['hooks'] = {};
+  const wrappedHooks: AstroIntegration["hooks"] = {};
 
   for (const [hookName, hookFn] of Object.entries(integration.hooks || {})) {
     (wrappedHooks as any)[hookName] = async (...args: any[]) => {
@@ -13,8 +14,13 @@ export function wrapIntegration(
       try {
         return await (hookFn as Function)(...args);
       } finally {
-        const duration = performance.now() - start;
-        recordTiming(timings, integration.name, hookName, duration);
+        store.record({
+          category: "integration",
+          name: integration.name,
+          duration: performance.now() - start,
+          hook: hookName,
+          meta: { hook: hookName },
+        });
       }
     };
   }
@@ -23,19 +29,4 @@ export function wrapIntegration(
     ...integration,
     hooks: wrappedHooks,
   };
-}
-
-function recordTiming(
-  timings: TimingData,
-  integrationName: string,
-  hookName: string,
-  duration: number
-): void {
-  const entries = timings.entries.get(integrationName) || [];
-  entries.push({
-    name: integrationName,
-    hook: hookName,
-    duration,
-  });
-  timings.entries.set(integrationName, entries);
 }
