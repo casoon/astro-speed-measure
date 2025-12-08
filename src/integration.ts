@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { performance } from "node:perf_hooks";
 import { PageCollector } from "./collectors/page-collector.js";
 import { buildReport } from "./collectors/report.js";
-import { wrapIntegration } from "./hooks/wrap-integrations.js";
+import { wrapIntegrationInPlace } from "./hooks/wrap-integrations.js";
 import { formatReport } from "./output/console.js";
 import { writeCiSummary } from "./output/ci.js";
 import { writeHtmlReport } from "./output/html-report.js";
@@ -60,11 +60,11 @@ export function createSpeedMeasureIntegration(
         totalStart = store.getBuildStart();
 
         if (options.measureIntegrations) {
-          const wrappedIntegrations = config.integrations
-            .filter((integration) => integration.name !== "astro-speed-measure")
-            .map((integration) => wrapIntegration(integration, store));
-
-          updateConfig({ integrations: wrappedIntegrations });
+          // Wrap hooks in-place to preserve closure bindings (important for MDX)
+          for (const integration of config.integrations) {
+            if (integration.name === "astro-speed-measure") continue;
+            wrapIntegrationInPlace(integration, store);
+          }
         }
 
         if (options.measureVitePlugins) {
