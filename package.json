@@ -1,5 +1,5 @@
 {
-  "name": "astro-speed-measure",
+  "name": "@casoon/astro-speed-measure",
   "version": "0.1.0",
   "description": "Build performance metrics for Astro",
   "type": "module",
@@ -11,13 +11,21 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["astro", "astro-integration", "performance", "build", "metrics"],
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "performance",
+    "build",
+    "metrics"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

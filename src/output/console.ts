@@ -194,7 +194,7 @@ function getColor(
 }
 
 function createBar(duration: number, total: number, width = 20): string {
-  const percent = duration / Math.max(total, 1);
+  const percent = Math.max(0, Math.min(1, duration / Math.max(total, 1)));
   const filled = Math.round(percent * width);
   const empty = width - filled;
   return pc.cyan("█".repeat(filled) + "░".repeat(empty));
