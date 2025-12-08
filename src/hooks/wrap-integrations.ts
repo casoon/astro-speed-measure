@@ -9,20 +9,39 @@ export function wrapIntegration(
   const wrappedHooks: AstroIntegration["hooks"] = {};
 
   for (const [hookName, hookFn] of Object.entries(integration.hooks || {})) {
-    (wrappedHooks as any)[hookName] = async (...args: any[]) => {
-      const start = performance.now();
-      try {
-        return await (hookFn as Function)(...args);
-      } finally {
-        store.record({
-          category: "integration",
-          name: integration.name,
-          duration: performance.now() - start,
-          hook: hookName,
-          meta: { hook: hookName },
-        });
-      }
-    };
+    const isAsync = (hookFn as Function).constructor.name === "AsyncFunction";
+
+    if (isAsync) {
+      (wrappedHooks as any)[hookName] = async (...args: any[]) => {
+        const start = performance.now();
+        try {
+          return await (hookFn as Function)(...args);
+        } finally {
+          store.record({
+            category: "integration",
+            name: integration.name,
+            duration: performance.now() - start,
+            hook: hookName,
+            meta: { hook: hookName },
+          });
+        }
+      };
+    } else {
+      (wrappedHooks as any)[hookName] = (...args: any[]) => {
+        const start = performance.now();
+        try {
+          return (hookFn as Function)(...args);
+        } finally {
+          store.record({
+            category: "integration",
+            name: integration.name,
+            duration: performance.now() - start,
+            hook: hookName,
+            meta: { hook: hookName },
+          });
+        }
+      };
+    }
   }
 
   return {

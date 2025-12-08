@@ -1,6 +1,6 @@
 {
   "name": "@casoon/astro-speed-measure",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build performance metrics for Astro",
   "type": "module",
   "main": "./dist/index.js",
