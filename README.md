@@ -14,7 +14,7 @@ Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/spe
 ## Installation
 
 ```bash
-npm install astro-speed-measure
+npm install @casoon/astro-speed-measure
 ```
 
 ## Quick start
@@ -22,7 +22,7 @@ npm install astro-speed-measure
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
