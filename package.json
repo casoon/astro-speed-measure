@@ -1,6 +1,6 @@
 {
   "name": "@casoon/astro-speed-measure",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Build performance metrics for Astro",
   "type": "module",
   "main": "./dist/index.js",
@@ -26,6 +26,7 @@
     "build",
     "metrics"
   ],
+  "author": "CASOON <joern.seidel@casoon.de>",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,15 +36,21 @@
     "url": "https://github.com/casoon/astro-speed-measure/issues"
   },
   "homepage": "https://github.com/casoon/astro-speed-measure#readme",
+  "engines": {
+    "node": "^18.17.1 || ^20.3.0 || >=22.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
-    "astro": "^4.0.0 || ^5.0.0"
+    "astro": "^5.0.0 || ^6.0.0-beta.0 || ^6.0.0"
   },
   "dependencies": {
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
-    "astro": "^5.1.1",
+    "astro": "^6.0.0-beta.15",
     "typescript": "^5.7.2"
   }
 }

@@ -2,6 +2,8 @@
 
 Measure Astro build performance end-to-end. Wraps integrations and Vite plugins, aggregates per-page and asset timings, and emits human, JSON, or HTML reports.
 
+**Compatible with Astro v5 and v6.**
+
 Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/speed-measure-webpack-plugin).
 
 ## Features
@@ -14,15 +16,17 @@ Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/spe
 ## Installation
 
 ```bash
-npm install astro-speed-measure
+npm install @casoon/astro-speed-measure
 ```
+
+Requires Astro `^5.0.0` or `^6.0.0` (including betas) as a peer dependency. Node.js `^18.17.1 || ^20.3.0 || >=22.0.0`.
 
 ## Quick start
 
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -78,7 +82,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [speedMeasure()],
@@ -90,7 +94,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -108,7 +112,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -127,7 +131,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -148,7 +152,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -171,7 +175,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -190,7 +194,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -208,7 +212,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
@@ -226,7 +230,7 @@ export default defineConfig({
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import speedMeasure from 'astro-speed-measure';
+import speedMeasure from '@casoon/astro-speed-measure';
 
 export default defineConfig({
   integrations: [
