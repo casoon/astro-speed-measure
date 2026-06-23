@@ -2,15 +2,16 @@
 
 Measure Astro build performance end-to-end. Wraps integrations and Vite plugins, aggregates per-page and asset timings, and emits human, JSON, or HTML reports.
 
-**Compatible with Astro v5 and v6.**
+**Compatible with Astro v5, v6, and v7.**
 
 Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/speed-measure-webpack-plugin).
 
 ## Features
+
 - Track Astro integration hooks.
 - Time Vite plugin `resolveId`, `load`, `transform`, and `renderChunk`.
 - Aggregate per-page timing (SSG/SSR/API), asset timing (scripts, styles, images, fonts), and content collection work.
-- Output to console, JSON, or HTML; keep a JSON baseline for comparisons.
+- Output to console, JSON, or HTML; keep a JSON baseline for trend comparisons.
 - Budgets and CI summary (GitHub Actions `GITHUB_STEP_SUMMARY`).
 
 ## Installation
@@ -19,7 +20,7 @@ Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/spe
 npm install @casoon/astro-speed-measure
 ```
 
-Requires Astro `^5.0.0` or `^6.0.0` (including betas) as a peer dependency. Node.js `^18.17.1 || ^20.3.0 || >=22.0.0`.
+Requires Astro `^5.0.0`, `^6.0.0`, or `^7.0.0` as a peer dependency. Node.js `>=22.12.0`.
 
 ## Quick start
 
@@ -55,7 +56,7 @@ export default defineConfig({
 |--------|------|---------|-------------|
 | `output` | `'human' \| 'json' \| 'html' \| Function` | `'human'` | Output mode |
 | `outputFile` | `string` | `./astro-speed-measure-report.json` | Baseline file for JSON/HTML |
-| `disable` | `boolean` | `false` | Disable measurement |
+| `disable` | `boolean` | `false` | Disable measurement entirely |
 | `measureIntegrations` | `boolean` | `true` | Measure Astro integrations |
 | `measureVitePlugins` | `boolean` | `true` | Measure Vite plugins (resolve/load/transform/renderChunk) |
 | `measurePages` | `boolean` | `true` | Aggregate per-page timings based on plugin transforms |
@@ -67,17 +68,18 @@ export default defineConfig({
 | `budgets` | `object` | `{}` | Warn when build/page/integration/plugin exceeds budget (ms) |
 | `ciSummary` | `boolean` | `true` | Write summary to `GITHUB_STEP_SUMMARY` when available |
 | `verbose` | `boolean` | `false` | Show hook-level detail |
-| `thresholds` | `{ green?: number; yellow?: number }` | `{ green: 100, yellow: 1000 }` | Console coloring thresholds |
+| `thresholds` | `{ green?: number; yellow?: number }` | `{ green: 100, yellow: 1000 }` | Console coloring thresholds (ms) |
 
 ## Outputs
 
-- **Console**: human-friendly table with colored bars; add `verbose: true` for hook-level detail.
-- **JSON**: persisted timing report for trend comparisons.
-- **HTML**: standalone report with tables for integrations, plugins, pages, assets, and content.
+- **Console** (`output: 'human'`): human-friendly table with colored bars; add `verbose: true` for hook-level detail.
+- **JSON** (`output: 'json'`): persisted timing report, useful for trend comparisons and CI artifacts.
+- **HTML** (`output: 'html'`): standalone dark-mode report with tables for integrations, plugins, pages, assets, and content.
+- **Function** (`output: (report) => void`): receive the full `TimingReport` for custom handling.
 
-## Usage Examples
+## Usage examples
 
-### Minimal Setup
+### Minimal setup
 
 ```js
 // astro.config.mjs
@@ -89,7 +91,7 @@ export default defineConfig({
 });
 ```
 
-### JSON Report for CI Pipelines
+### JSON report for CI pipelines
 
 ```js
 // astro.config.mjs
@@ -107,7 +109,7 @@ export default defineConfig({
 });
 ```
 
-### HTML Report for Detailed Analysis
+### HTML report for detailed analysis
 
 ```js
 // astro.config.mjs
@@ -126,7 +128,7 @@ export default defineConfig({
 });
 ```
 
-### Build Budgets with Warnings
+### Build budgets with warnings
 
 ```js
 // astro.config.mjs
@@ -147,7 +149,7 @@ export default defineConfig({
 });
 ```
 
-### Custom Output Handler
+### Custom output handler
 
 ```js
 // astro.config.mjs
@@ -158,7 +160,7 @@ export default defineConfig({
   integrations: [
     speedMeasure({
       output: (report) => {
-        // Send metrics to external service
+        // Send metrics to an external service
         fetch('https://metrics.example.com/api/build', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -170,7 +172,7 @@ export default defineConfig({
 });
 ```
 
-### Verbose Mode for Debugging
+### Verbose mode for debugging
 
 ```js
 // astro.config.mjs
@@ -180,34 +182,29 @@ import speedMeasure from '@casoon/astro-speed-measure';
 export default defineConfig({
   integrations: [
     speedMeasure({
-      verbose: true,           // show hook-level details
-      measurePages: true,
-      measureAssets: true,
-      measureContentCollections: true,
+      verbose: true, // show hook-level timing detail
     }),
   ],
 });
 ```
 
-### Disable in Development
+### Disable in development
 
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import speedMeasure from '@casoon/astro-speed-measure';
 
-const isProd = process.env.NODE_ENV === 'production';
-
 export default defineConfig({
   integrations: [
     speedMeasure({
-      disable: !isProd, // only measure in production builds
+      disable: process.env.NODE_ENV !== 'production',
     }),
   ],
 });
 ```
 
-### Trend Comparison
+### Trend comparison across builds
 
 ```js
 // astro.config.mjs
@@ -219,13 +216,13 @@ export default defineConfig({
     speedMeasure({
       output: 'human',
       outputFile: './metrics-baseline.json',
-      compareWithPrevious: true, // compare against last run
+      compareWithPrevious: true,
     }),
   ],
 });
 ```
 
-### Focus on Specific Metrics
+### Focus on specific metrics
 
 ```js
 // astro.config.mjs
@@ -236,13 +233,21 @@ export default defineConfig({
   integrations: [
     speedMeasure({
       measureIntegrations: true,
-      measureVitePlugins: false,  // skip Vite plugin timing
+      measureVitePlugins: false,
       measurePages: true,
-      measureAssets: false,       // skip asset timing
+      measureAssets: false,
       measureContentCollections: false,
     }),
   ],
 });
+```
+
+## TypeScript
+
+`TimingReport`, `TimingSample`, and `SpeedMeasureOptions` are exported for use in custom output handlers:
+
+```ts
+import type { TimingReport } from '@casoon/astro-speed-measure';
 ```
 
 ## License

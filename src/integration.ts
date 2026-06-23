@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import type { AstroIntegration } from "astro";
+import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { fileURLToPath } from "node:url";
 import { performance } from "node:perf_hooks";
 import { PageCollector } from "./collectors/page-collector.js";
@@ -10,6 +10,7 @@ import { writeCiSummary } from "./output/ci.js";
 import { writeHtmlReport } from "./output/html-report.js";
 import { writeJsonReport } from "./output/json.js";
 import type { SpeedMeasureOptions, TimingReport } from "./types.js";
+import { formatMs } from "./utils/format.js";
 import { TimingStore } from "./utils/timing.js";
 import { createTimingVitePlugin } from "./vite-plugin.js";
 
@@ -185,7 +186,7 @@ async function readPreviousReport(path: string): Promise<TimingReport | null> {
 function logComparison(
   previous: TimingReport,
   current: TimingReport,
-  logger?: any,
+  logger?: AstroIntegrationLogger,
 ): void {
   const diff = current.totalBuildTime - previous.totalBuildTime;
   const symbol = diff >= 0 ? "▲" : "▼";
@@ -196,7 +197,7 @@ function logComparison(
 function enforceBudgets(
   report: TimingReport,
   options: SpeedMeasureOptions,
-  logger?: any,
+  logger?: AstroIntegrationLogger,
 ): void {
   const budgets = options.budgets;
   if (!budgets) return;
@@ -244,8 +245,3 @@ function enforceBudgets(
   }
 }
 
-function formatMs(ms: number): string {
-  if (ms < 1) return "<1ms";
-  if (ms < 1000) return `${ms.toFixed(0)}ms`;
-  return `${(ms / 1000).toFixed(2)}s`;
-}

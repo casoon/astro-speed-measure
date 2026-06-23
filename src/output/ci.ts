@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import type { TimingReport } from "../types.js";
+import { formatMs } from "../utils/format.js";
 
 export async function writeCiSummary(report: TimingReport): Promise<void> {
   const summaryPath = process.env.GITHUB_STEP_SUMMARY;
@@ -28,8 +29,3 @@ export async function writeCiSummary(report: TimingReport): Promise<void> {
   await fs.appendFile(summaryPath, `${lines.join("\n")}\n`, "utf8");
 }
 
-function formatMs(ms: number): string {
-  if (ms < 1) return "<1ms";
-  if (ms < 1000) return `${ms.toFixed(0)}ms`;
-  return `${(ms / 1000).toFixed(2)}s`;
-}

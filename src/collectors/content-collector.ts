@@ -14,7 +14,8 @@ export function collectContent(samples: TimingSample[], root: string): ContentTi
 
     const collection = segments[contentIndex + 1];
     const existing = collections.get(collection);
-    const filePath = segments.slice(segments.indexOf('src')).join(path.sep);
+    const srcIndex = segments.indexOf('src');
+    const filePath = srcIndex !== -1 ? segments.slice(srcIndex).join(path.sep) : id;
     if (existing) {
       existing.duration += sample.duration;
       existing.entries += 1;

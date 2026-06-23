@@ -1,5 +1,6 @@
 import pc from "picocolors";
 import type { SpeedMeasureOptions, TimingReport } from "../types.js";
+import { formatMs } from "../utils/format.js";
 
 export function formatReport(
   report: TimingReport,
@@ -33,7 +34,7 @@ export function formatReport(
   console.log(
     pc.bold(
       pc.cyan(
-        `║  Total Build Time: ${formatTime(report.totalBuildTime).padEnd(42)}║`,
+        `║  Total Build Time: ${formatMs(report.totalBuildTime).padEnd(42)}║`,
       ),
     ),
   );
@@ -55,7 +56,7 @@ export function formatReport(
     );
 
     for (const entry of report.integrations) {
-      const timeStr = formatTime(entry.duration);
+      const timeStr = formatMs(entry.duration);
       const color = getColor(entry.duration, thresholds);
       const bar = createBar(entry.duration, report.totalBuildTime);
       const percent = ((entry.duration / report.totalBuildTime) * 100).toFixed(
@@ -67,7 +68,7 @@ export function formatReport(
       );
       if (options.verbose && entry.hooks.length) {
         for (const hook of entry.hooks) {
-          const hookTime = formatTime(hook.duration);
+          const hookTime = formatMs(hook.duration);
           console.log(
             `    ${pc.gray("└─")} ${hook.name.padEnd(22)} ${hookTime.padStart(
               8,
@@ -87,7 +88,7 @@ export function formatReport(
       ),
     );
     for (const entry of report.vitePlugins) {
-      const timeStr = formatTime(entry.duration);
+      const timeStr = formatMs(entry.duration);
       const color = getColor(entry.duration, thresholds);
       const bar = createBar(entry.duration, report.totalBuildTime);
       const percent = ((entry.duration / report.totalBuildTime) * 100).toFixed(
@@ -100,7 +101,7 @@ export function formatReport(
       );
       if (options.verbose && entry.hooks.length) {
         for (const hook of entry.hooks) {
-          const hookTime = formatTime(hook.duration);
+          const hookTime = formatMs(hook.duration);
           console.log(
             `    ${pc.gray("└─")} ${hook.name.padEnd(22)} ${hookTime.padStart(
               8,
@@ -120,7 +121,7 @@ export function formatReport(
       ),
     );
     for (const page of report.pages.slice(0, options.topPages ?? 10)) {
-      const timeStr = formatTime(page.duration);
+      const timeStr = formatMs(page.duration);
       const color = getColor(page.duration, thresholds);
       console.log(
         `  ${color(page.pathname.padEnd(32))} ${page.type.padEnd(
@@ -139,7 +140,7 @@ export function formatReport(
       ),
     );
     for (const asset of report.assets.slice(0, options.topAssets ?? 10)) {
-      const timeStr = formatTime(asset.duration);
+      const timeStr = formatMs(asset.duration);
       console.log(
         `  ${asset.type.padEnd(8)} ${timeStr.padStart(
           8,
@@ -157,7 +158,7 @@ export function formatReport(
       ),
     );
     for (const collection of report.contentCollections) {
-      const timeStr = formatTime(collection.duration);
+      const timeStr = formatMs(collection.duration);
       console.log(
         `  ${collection.collection.padEnd(16)} ${timeStr.padStart(
           8,
@@ -171,14 +172,6 @@ export function formatReport(
     }
     console.log("");
   }
-}
-
-function formatTime(ms: number): string {
-  if (ms < 1) return "<1ms";
-  if (ms < 1000) {
-    return `${ms.toFixed(0)}ms`;
-  }
-  return `${(ms / 1000).toFixed(2)}s`;
 }
 
 function getColor(

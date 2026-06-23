@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import type { TimingReport } from "../types.js";
+import { formatMs } from "../utils/format.js";
 
 export async function writeHtmlReport(
   report: TimingReport,
@@ -81,7 +82,7 @@ function createHtml(report: TimingReport): string {
   <h1>Astro Speed Measure</h1>
   <div class="panel">
     <div class="label">Total build time</div>
-    <div class="value">${formatTime(report.totalBuildTime)}</div>
+    <div class="value">${formatMs(report.totalBuildTime)}</div>
     <div class="bar"><span style="width:100%"></span></div>
   </div>
 
@@ -112,8 +113,8 @@ function renderSection(
         ${items
           .map(
             (item) => `<tr>
-              <td>${item.name}</td>
-              <td class="mono">${formatTime(item.duration)}</td>
+              <td>${escapeHtml(item.name)}</td>
+              <td class="mono">${formatMs(item.duration)}</td>
               <td>${item.count}</td>
             </tr>`,
           )
@@ -133,10 +134,10 @@ function renderPages(pages: TimingReport["pages"]): string {
         ${pages
           .map(
             (page) => `<tr>
-              <td>${page.pathname}</td>
-              <td>${page.type}</td>
-              <td class="mono">${formatTime(page.duration)}</td>
-              <td class="mono">${page.component}</td>
+              <td>${escapeHtml(page.pathname)}</td>
+              <td>${escapeHtml(page.type)}</td>
+              <td class="mono">${formatMs(page.duration)}</td>
+              <td class="mono">${escapeHtml(page.component)}</td>
             </tr>`,
           )
           .join("")}
@@ -155,10 +156,10 @@ function renderAssets(assets: TimingReport["assets"]): string {
         ${assets
           .map(
             (asset) => `<tr>
-              <td class="mono">${asset.path}</td>
-              <td>${asset.type}</td>
-              <td class="mono">${formatTime(asset.duration)}</td>
-              <td>${asset.plugin ?? ""}</td>
+              <td class="mono">${escapeHtml(asset.path)}</td>
+              <td>${escapeHtml(asset.type)}</td>
+              <td class="mono">${formatMs(asset.duration)}</td>
+              <td>${escapeHtml(asset.plugin ?? "")}</td>
             </tr>`,
           )
           .join("")}
@@ -177,8 +178,8 @@ function renderContent(content: TimingReport["contentCollections"]): string {
         ${content
           .map(
             (collection) => `<tr>
-              <td>${collection.collection}</td>
-              <td class="mono">${formatTime(collection.duration)}</td>
+              <td>${escapeHtml(collection.collection)}</td>
+              <td class="mono">${formatMs(collection.duration)}</td>
               <td>${collection.entries}</td>
             </tr>`,
           )
@@ -188,8 +189,10 @@ function renderContent(content: TimingReport["contentCollections"]): string {
   </div>`;
 }
 
-function formatTime(ms: number): string {
-  if (ms < 1) return "<1ms";
-  if (ms < 1000) return `${ms.toFixed(0)}ms`;
-  return `${(ms / 1000).toFixed(2)}s`;
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
