@@ -1,0 +1,27 @@
+{
+  "name": "astro-speed-measure-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "type-check": "astro check",
+    "capture": "node scripts/capture-report.mjs"
+  },
+  "dependencies": {
+    "@casoon/astro-speed-measure": "^0.4.0",
+    "@casoon/pages-theme": "file:./vendor/pages-theme",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.13.4",
+    "typescript": "^6.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

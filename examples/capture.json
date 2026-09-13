@@ -1,0 +1,8 @@
+{
+  "capturedAt": "2026-09-13",
+  "command": "astro build",
+  "os": "Darwin 27.0.0 (arm64)",
+  "node": "v24.11.1",
+  "astro": "7.3.2",
+  "astroSpeedMeasure": "0.4.0"
+}

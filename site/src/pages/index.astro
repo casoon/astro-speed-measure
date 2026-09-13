@@ -1,0 +1,106 @@
+---
+import {
+  Badge,
+  Badges,
+  BuildOutput,
+  CodeBlock,
+  Facts,
+  Features,
+  Hero,
+  Install,
+  Quickstart,
+  Terminal,
+} from '@casoon/pages-theme/components';
+import Base from '@casoon/pages-theme/layouts/Base.astro';
+import report from '../../../examples/build-report.ansi?raw';
+import data from '../../../examples/build-report.json';
+import capture from '../../../examples/capture.json';
+
+const seconds = (data.totalBuildTime / 1000).toFixed(2);
+
+// The hero shows the report up to the page section; the full report follows further down.
+const lines = report.split('\n');
+const pagesAt = lines.findIndex((line) => line.replace(/\x1b\[[0-9;]*m/g, '').startsWith('PAGES'));
+const excerpt = lines
+  .slice(0, pagesAt === -1 ? lines.length : pagesAt)
+  .join('\n')
+  .trimEnd();
+
+const config = `// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import speedMeasure from '@casoon/astro-speed-measure';
+
+export default defineConfig({
+  integrations: [speedMeasure()],
+});`;
+---
+
+<Base>
+  <Hero
+    title="See where your Astro build spends its time."
+    lead="astro-speed-measure wraps the hooks of your integrations and Vite plugins, adds up the time per page, asset and content collection, and prints a report when the build is done. The report next to this text comes from building this site."
+  >
+    <Install
+      commands={[
+        { label: 'npm', command: 'npm install @casoon/astro-speed-measure' },
+        { label: 'pnpm', command: 'pnpm add @casoon/astro-speed-measure' },
+      ]}
+    />
+    <Badges>
+      <Badge>MIT</Badge>
+      <Badge>npm 0.4.0</Badge>
+      <Badge>Astro 5 · 6 · 7</Badge>
+      <Badge>Node ≥ 22.12</Badge>
+    </Badges>
+    <Terminal slot="output" title="astro build · this site (excerpt)" dots ansi={excerpt} />
+  </Hero>
+
+  <Facts
+    items={[
+      { value: `${seconds} s`, label: `to build this site, measured on ${capture.capturedAt}` },
+      { value: String(data.vitePlugins.length), label: 'Vite plugins timed in that build' },
+      { value: '4', label: 'Vite hooks wrapped per plugin' },
+      { value: '1', label: 'runtime dependency (picocolors)' },
+    ]}
+  />
+
+  <Features
+    items={[
+      {
+        title: 'Integration hooks',
+        body: 'Every hook of every integration in your config is wrapped in place and timed, including closures that hooks share, as <code>@astrojs/mdx</code> needs.',
+      },
+      {
+        title: 'Vite plugins',
+        body: '<code>resolveId</code>, <code>load</code>, <code>transform</code> and <code>renderChunk</code> are timed for each plugin. The module ids of those calls feed the page, asset and content views.',
+      },
+      {
+        title: 'Pages, assets, content',
+        body: 'The module timings are grouped into the slowest pages, the slowest scripts, styles, fonts and images, and the time spent on each content collection.',
+      },
+      {
+        title: 'Baselines, budgets, CI',
+        body: 'The JSON report is kept for a comparison with the next build. Budgets warn when a limit is exceeded, and GitHub Actions gets a step summary.',
+      },
+    ]}
+  />
+
+  <BuildOutput
+    heading="The full report"
+    caption={`Complete console report of one build of this site, captured with pnpm capture on ${capture.capturedAt} (${capture.os}, Node ${capture.node}, Astro ${capture.astro}). The showcase adds the JSON report and the full build log; every CI build of this site prints a fresh report in its Actions log.`}
+    file="examples/build-report.ansi"
+  >
+    <Terminal title={capture.command} ansi={report} />
+  </BuildOutput>
+
+  <Quickstart
+    lead="Three steps from install to the first report. The documentation explains how to read each section."
+    steps={[
+      'Install <code>@casoon/astro-speed-measure</code> next to Astro 5, 6 or 7.',
+      'Add <code>speedMeasure()</code> to <code>integrations</code>, ideally as the first entry.',
+      'Run <code>astro build</code> and read the report at the end of the log.',
+    ]}
+  >
+    <CodeBlock code={config} lang="js" title="astro.config.mjs" label="JavaScript" />
+  </Quickstart>
+</Base>

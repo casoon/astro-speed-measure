@@ -1,0 +1,105 @@
+[2m00:32:27[22m [34m[astro-speed-measure][39m astro-speed-measure enabled
+[2m00:32:27[22m [34m[content][39m Syncing content
+[2m00:32:27[22m [34m[content][39m Synced content
+[2m00:32:27[22m [34m[types][39m Generated [2m269ms[22m
+[2m00:32:27[22m [34m[build][39m output: [34m"static"[39m
+[2m00:32:27[22m [34m[build][39m mode: [34m"static"[39m
+[2m00:32:27[22m [34m[build][39m directory: [34msite/dist/[39m
+[2m00:32:27[22m [34m[build][39m Collecting build info...
+[2m00:32:27[22m [34m[build][39m [32m✓ Completed in 317ms.[39m
+[2m00:32:27[22m [34m[build][39m Building static entrypoints...
+[2m00:32:27[22m [34m[vite][39m [32m✓ built in 295ms[39m
+[2m00:32:27[22m [34m[vite][39m [32m✓ built in 7ms[39m
+[2m00:32:27[22m [34m[build][39m Rearranging server assets...
+
+[42m[30m generating static routes [39m[49m
+[2m00:32:27[22m   [34m├─[39m [2m/404.html[22m [2m(+8ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/changelog/index.html[22m [2m(+3ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/getting-started/installation/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/getting-started/quickstart/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/guides/ci-and-budgets/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/guides/integration-timings/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/guides/vite-timings/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/reference/options/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/docs/reference/timing-report/index.html[22m [2m(+1ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/showcase/console-report/index.html[22m [2m(+74ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/showcase/json-report/index.html[22m [2m(+3ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/showcase/build-log/index.html[22m [2m(+3ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/showcase/index.html[22m [2m(+4ms)[22m 
+[2m00:32:27[22m   [34m├─[39m [2m/index.html[22m [2m(+4ms)[22m 
+[2m00:32:27[22m [32m✓ Completed in 126ms.
+[39m
+[2m00:32:27[22m [34m[build][39m [32m✓ Completed in 457ms.[39m
+
+[1m[36m╔══════════════════════════════════════════════════════════════╗[39m[22m
+[1m[36m║  ASTRO SPEED MEASURE - Build Performance Report              ║[39m[22m
+[1m[36m╠══════════════════════════════════════════════════════════════╣[39m[22m
+[1m[36m║  Total Build Time: 776ms                                     ║[39m[22m
+[1m[36m╚══════════════════════════════════════════════════════════════╝[39m[22m
+
+[1mINTEGRATIONS[22m
+[90m────────────────────────────────────────────────────────────────[39m
+  [32m@casoon/pages-theme     [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+
+[1mVITE PLUGINS[22m
+[90m────────────────────────────────────────────────────────────────[39m
+  [32mastro:session-provider  [39m     74ms  [36m██░░░░░░░░░░░░░░░░░░[39m  10%
+  [32mastro:routes            [39m     44ms  [36m█░░░░░░░░░░░░░░░░░░░[39m  6%
+  [32mvite:import-analysis    [39m     25ms  [36m█░░░░░░░░░░░░░░░░░░░[39m  3%
+  [32mvite:css-post           [39m     22ms  [36m█░░░░░░░░░░░░░░░░░░░[39m  3%
+  [32mastro:assets            [39m     14ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  2%
+  [32mastro:server-islands    [39m      8ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  1%
+  [32mbuiltin:vite-json       [39m      4ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mcasoon-pages-virtual    [39m      2ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mastro:scripts:page-ssr  [39m      2ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mbuiltin:oxc-runtime     [39m      2ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:asset              [39m      2ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mastro:head-metadata     [39m      2ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:build-import-analysis[39m      1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:oxc                [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:terser             [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32malias                   [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:client-inject      [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:pre-alias          [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+  [32mvite:optimized-deps     [39m     <1ms  [36m░░░░░░░░░░░░░░░░░░░░[39m  0%
+
+[1mPAGES (slowest first)[22m
+[90m────────────────────────────────────────────────────────────────[39m
+  [32m/changelog                      [39m ssg      <1ms [90mnode_modules/.pnpm/@casoon+pages-theme@file+vendor+pages-theme_@astrojs+markdown-satteri@0.4.1_astro@7.3.2_c0319b61b9df79e09748d5dd99f309c2/node_modules/@casoon/pages-theme/routes/changelog.astro[39m
+  [32m/404                            [39m ssg      <1ms [90mnode_modules/.pnpm/@casoon+pages-theme@file+vendor+pages-theme_@astrojs+markdown-satteri@0.4.1_astro@7.3.2_c0319b61b9df79e09748d5dd99f309c2/node_modules/@casoon/pages-theme/routes/404.astro[39m
+  [32m/showcase/[slug]                [39m ssg      <1ms [90mnode_modules/.pnpm/@casoon+pages-theme@file+vendor+pages-theme_@astrojs+markdown-satteri@0.4.1_astro@7.3.2_c0319b61b9df79e09748d5dd99f309c2/node_modules/@casoon/pages-theme/routes/showcase/[slug].astro[39m
+  [32m/showcase                       [39m ssg      <1ms [90mnode_modules/.pnpm/@casoon+pages-theme@file+vendor+pages-theme_@astrojs+markdown-satteri@0.4.1_astro@7.3.2_c0319b61b9df79e09748d5dd99f309c2/node_modules/@casoon/pages-theme/routes/showcase/index.astro[39m
+  [32m/docs/[...slug]                 [39m ssg      <1ms [90mnode_modules/.pnpm/@casoon+pages-theme@file+vendor+pages-theme_@astrojs+markdown-satteri@0.4.1_astro@7.3.2_c0319b61b9df79e09748d5dd99f309c2/node_modules/@casoon/pages-theme/routes/docs/[...slug].astro[39m
+  [32m/                               [39m ssg      <1ms [90msrc/pages/index.astro[39m
+  [32m/_server-islands/[name]         [39m ssr      <1ms [90m_server-islands.astro[39m
+  [32m/_image                         [39m api      <1ms [90mnode_modules/.pnpm/astro@7.3.2_@emnapi+core@1.11.1_@emnapi+runtime@1.11.3_@types+node@24.13.4_yaml@2.9.1/node_modules/astro/dist/assets/endpoint/dev.js[39m
+
+[1mASSETS (slowest first)[22m
+[90m────────────────────────────────────────────────────────────────[39m
+  script       44ms [90m../session/provider.js[39m
+  script        4ms [90mchunks/Base_!~{001}~.mjs[39m
+  script        1ms [90m../core/util.js[39m
+  script        1ms [90mchunks/cpp_!~{01j}~.mjs[39m
+  script        1ms [90msrc/content.config.ts[39m
+  script        1ms [90mchunks/components_!~{00h}~.mjs[39m
+  script       <1ms [90mchunks/ansi_!~{00g}~.mjs[39m
+  script       <1ms [90mutils.js[39m
+  script       <1ms [90mjavascript.mjs[39m
+  script       <1ms [90mchunks/jsx-runtime_!~{002}~.mjs[39m
+
+[1mCONTENT COLLECTIONS[22m
+[90m────────────────────────────────────────────────────────────────[39m
+  runtime.js            3ms (27 entries)
+  loaders               2ms (71 entries)
+  utils.js             <1ms (11 entries)
+  data-store.js        <1ms (27 entries)
+  config.js            <1ms (27 entries)
+  runtime-assets.js     <1ms (11 entries)
+  consts.js            <1ms (36 entries)
+  data-store-source.js     <1ms (27 entries)
+  runtime              <1ms (13 entries)
+
+[2m00:32:28[22m [34m[astro-speed-measure][39m astro-speed-measure: wrote JSON report to ./.astro/speed-measure-report.json
+[2m00:32:28[22m [34m[build][39m 15 page(s) built in [1m850ms[22m
+[2m00:32:28[22m [34m[build][39m [1mComplete![22m
