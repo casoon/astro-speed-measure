@@ -2,6 +2,8 @@
 
 Measure Astro build performance end-to-end. Wraps integrations and Vite plugins, aggregates per-page and asset timings, and emits human, JSON, or HTML reports.
 
+**Website and documentation:** [casoon.github.io/astro-speed-measure](https://casoon.github.io/astro-speed-measure/)
+
 **Compatible with Astro v5, v6, and v7.**
 
 Inspired by [speed-measure-webpack-plugin](https://github.com/stephencookdev/speed-measure-webpack-plugin).
