@@ -18,6 +18,7 @@ export default defineConfig({
       name: 'astro-speed-measure',
       description:
         'Build performance metrics for Astro: integration hooks, Vite plugins, pages, assets and content collections.',
+      tagline: 'Build performance metrics for Astro',
       repo: 'casoon/astro-speed-measure',
       version: '0.4.0',
       license: 'MIT',
