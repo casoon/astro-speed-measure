@@ -4,6 +4,14 @@ All notable changes to this project are documented in this file. The format foll
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Release dates are the npm publish
 dates (UTC).
 
+## [Unreleased]
+
+## [0.4.1] - 2026-10-27
+
+### Changed
+
+- **Release:** the package is published from a GitHub Actions workflow with npm Trusted Publishing and provenance after approval in the `npm` environment; the code is unchanged from 0.4.0.
+
 ## [0.4.0] - 2026-06-23
 
 ### Added
