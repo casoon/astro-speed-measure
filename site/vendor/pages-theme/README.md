@@ -70,7 +70,7 @@ export const collections = { docs: docsCollection() };
 | `version` | the project's manifest | Header badge, "Docs for vX"; see „Version" | 
 | `license` | `MIT` | SPDX id for footer and JSON-LD; `false` for proprietary code names no licence |
 | `branch` | `main` | "Edit this page" links |
-| `accent` | CASOON petrol | `{ light, dark }` project colour; needs 4.5:1 on `#f6f6f5` and `#101010` |
+| `accent` | CASOON petrol | `{ light, dark }` project colour; needs 4.5:1 on `#f4f1eb` and `#151412` |
 | `packages` | `[]` | Registry and API-doc links in the footer |
 | `docsGroups` | `{}` | Sidebar groups: folder in `docs/` → label, in order. Root pages join the first group |
 | `changelog` | `../CHANGELOG.md` | Path relative to `site/`, or `false` |
