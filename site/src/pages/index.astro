@@ -3,6 +3,7 @@ import {
   Badge,
   Badges,
   BuildOutput,
+  CallToAction,
   CodeBlock,
   Facts,
   Features,
@@ -12,6 +13,7 @@ import {
   Terminal,
 } from '@casoon/pages-theme/components';
 import Base from '@casoon/pages-theme/layouts/Base.astro';
+import { url } from '@casoon/pages-theme/url';
 import report from '../../../examples/build-report.ansi?raw';
 import data from '../../../examples/build-report.json';
 import capture from '../../../examples/capture.json';
@@ -103,4 +105,10 @@ export default defineConfig({
   >
     <CodeBlock code={config} lang="js" title="astro.config.mjs" label="JavaScript" />
   </Quickstart>
+
+  <CallToAction
+    title="Your first build report in three steps."
+    href={url('docs/getting-started/quickstart/')}
+    label="Read the quickstart"
+  />
 </Base>

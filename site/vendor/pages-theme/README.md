@@ -65,9 +65,9 @@ export const collections = { docs: docsCollection() };
 | --- | --- | --- |
 | `name`, `description`, `repo` | – | Header, meta tags, GitHub links, JSON-LD |
 | `tagline` | – | A few words for the start page's `<title>` and the OG image; see „Search engines" |
-| `website` | – | The project's landing page (`https://judge.casoon.de`): header, footer, JSON-LD `sameAs` |
+| `website` | – | The project's landing page (`https://example.com`): header, footer, JSON-LD `sameAs` |
 | `catalog` | repository name | Slug of the project's entry on casoon.dev (`#projekt-<slug>`), linked in the footer; `false` for none |
-| `version` | – | Header badge, "Docs for vX" |
+| `version` | the project's manifest | Header badge, "Docs for vX"; see „Version" | 
 | `license` | `MIT` | SPDX id for footer and JSON-LD; `false` for proprietary code names no licence |
 | `branch` | `main` | "Edit this page" links |
 | `accent` | CASOON petrol | `{ light, dark }` project colour; needs 4.5:1 on `#f6f6f5` and `#101010` |
@@ -79,6 +79,18 @@ export const collections = { docs: docsCollection() };
 | `mdxComponents` | – | Module exporting `components` for docs MDX, next to the theme's; see „Docs frontmatter" |
 | `lang` | `en` | `en` or `de`: `<html lang>` and the theme's own UI strings (`lib/i18n.ts`); props passed by the project win |
 | `showcaseLead` | – | Lead paragraph of the showcase overview, instead of the theme's generic one |
+
+#### Version
+
+Left out, `version` comes from the manifest next to `site/`: `version` in `package.json`, else
+`[package]` or `[workspace.package]` in `Cargo.toml`. So the number is maintained in one place,
+and a release updates the site by itself. Pages read it as `config.version` from
+`virtual:casoon-pages/config` — a start page that shows the release in a `Badge` takes it from
+there instead of typing it out.
+
+A wrong number is worse than none, so anything that cannot be read with certainty yields none:
+a workspace whose version sits in a member crate, a `package.json` without `version`, a project
+with neither manifest. Those pass `version` themselves, and `false` shows none at all.
 
 ### Routes
 
@@ -111,13 +123,19 @@ Import from `@casoon/pages-theme/components` in `.astro` files; available direct
 | Component | Use |
 | --- | --- |
 | `Hero` | Title, lead, default slot (install, badges), `output` slot (real output); `layout`, `command` and `tone` pick the variant |
-| `Install` | Install command per ecosystem, CSS-only tabs, copy button |
+| `AnchorGrid` | Card grid under the hero, each linking to a section further down or out to a doc |
+| `Install` | Install command per ecosystem, CSS-only tabs, copy button; long commands wrap at spaces and after a `/` |
 | `Badge`, `Badges` | Static badges (no external badge services) |
-| `Facts` | Verifiable key figures |
-| `Features` | 3–5 core points |
+| `Facts` | Verifiable key figures; `layout="grid"` (tiles) or `"list"` (spec sheet) |
+| `Features` | Core points; `layout="numbered"` (3–5 items) or `"grid"` (an icon-tile catalog) |
+| `Spotlight` | Repeatable two-column feature section — eyebrow, title, lead, bullets, links, beside a media slot |
+| `Integrations` | Grid of what the project plugs into: icon tile, name, category |
 | `FileSet` | The files a run produced: `tabs`, `grid` or `rail` view |
 | `BuildOutput` | One real build output on the start page |
 | `Quickstart` | Steps, docs link, code slot |
+| `Keymap` | Keyboard shortcuts or CLI flags, grouped cards of label + `<kbd>` keys |
+| `ReleaseHighlights` | Teaser of one changelog release on the start page |
+| `Faq` | Native `<details>` accordion, no JS |
 | `CodeBlock` | Build-time highlighting (Shiki, theme-aware), copy button |
 | `Terminal` | `ansi` prop (converted at build time) or pre-rendered HTML as slot |
 | `Callout` | `note`, `tip`, `caution`, `deprecated` |
@@ -146,6 +164,9 @@ files.
 | Pipeline | `layout="stack" command="<cmd>"` plus a `source` slot | `FileSet view="tabs"` — one pane per file |
 | Colour field | `tone="invert"` on any layout | `Terminal`, or whatever the project shows |
 | Editorial | `layout="editorial"` | `FileSet view="rail"` — names and one line each |
+
+The split layout gives the text column a little more than half from 900 px up, with a title
+size that fits about 40 characters on two lines at 1440 px; below 900 px text and output stack.
 
 The stack layout reads as a pipeline from top to bottom: the `source` slot (usually a
 `CodeBlock` with the configuration), the `command` pill, then the output — each over the full
@@ -222,13 +243,19 @@ in `astro.config.mjs`.
   `website`, the project's catalog entry on casoon.dev and the catalog itself, all with
   descriptive text in the page's `lang`.
 
-`casoon.github.io` has no root repository, so there is no root `robots.txt` pointing at the
-sitemaps. Register each site in Google Search Console instead, once per project:
+The root `https://casoon.github.io/` comes from the repository `casoon/casoon.github.io`: an
+overview of the project sites, the only `robots.txt` crawlers read for the domain (one `Sitemap:`
+line per project), and the Google Search Console verification. Its URL-prefix property
+`https://casoon.github.io/` covers every project site, so a project needs no property and no
+verification file of its own. For a new site:
 
-1. *Add property* → *URL prefix* → `https://casoon.github.io/<repo>/`.
-2. Verify ownership with the *HTML file* method: put the downloaded `google<id>.html` into the
-   project's `site/public/` and deploy; it is served at `https://casoon.github.io/<repo>/google<id>.html`.
-3. *Sitemaps* → submit `sitemap.xml` (resolved against the prefix).
+1. Deploy it and check that `https://casoon.github.io/<repo>/sitemap.xml` answers 200.
+2. In `casoon/casoon.github.io`, add `Sitemap: https://casoon.github.io/<repo>/sitemap.xml` to
+   `robots.txt` and the site to `index.html`, then push.
+3. In the property `https://casoon.github.io/`, *Sitemaps* → submit `<repo>/sitemap.xml`.
+
+Never set a custom domain on `casoon/casoon.github.io`: GitHub would redirect every project site
+to it as well.
 
 ## Rules the theme enforces
 
@@ -254,4 +281,5 @@ Grundlage ist das Claude-Design-Projekt „CASOON Pages Template“. Bewusst ge�
 - Footer mit echtem CASOON-Logo (hell/dunkel) statt Farbquadrat; alle `#`-Links durch echte
   Ziele ersetzt.
 - Tabs ohne JavaScript (Radio-Buttons); „Last updated“ in der Doku entfällt vorerst.
-- Auf schmalen Bildschirmen rückt die Navigation in eine zweite Zeile.
+- Auf schmalen Bildschirmen rückt die Navigation in eine zweite, einzeilige Zeile, die seitlich
+  scrollt, wenn sie nicht passt; der Theme-Umschalter bleibt neben dem Namen.

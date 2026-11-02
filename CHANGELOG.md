@@ -6,6 +6,11 @@ dates (UTC).
 
 ## [Unreleased]
 
+### Changed
+
+- **Docs:** the project site uses the current shared theme (0.12.4) and ends with a link to the
+  quickstart.
+
 ## [0.4.1] - 2026-10-27
 
 ### Changed
