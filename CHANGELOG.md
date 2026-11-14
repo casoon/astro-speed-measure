@@ -8,7 +8,7 @@ dates (UTC).
 
 ### Changed
 
-- **Docs:** the project site uses the current shared theme (0.12.12) and ends with a link to the
+- **Docs:** the project site uses the current shared theme (0.12.14) and ends with a link to the
   quickstart.
 
 ## [0.4.1] - 2026-10-27
